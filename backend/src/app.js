@@ -28,6 +28,6 @@ app.use("/api/emotions", emotionsRoutes);
 app.use("/api/emotionfeedback", emotionFeedbackRoutes);
 
 app.listen(PORT,()=>{
-    console.log("Server Runnng On Port:"+5000);
+    console.log("Server Running On Port:"+PORT);
     connectDB();
 });

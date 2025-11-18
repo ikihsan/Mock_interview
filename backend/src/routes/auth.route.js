@@ -1,5 +1,5 @@
 import express from "express"
-import { logIn, logOut, signUp} from "../controllers/auth.controller.js";
+import { logIn, logOut, signUp, getProfile} from "../controllers/auth.controller.js";
 import { protectRoute } from "../middleware/auth.middleware.js";
 import { checkAuth } from "../controllers/auth.controller.js";
 
@@ -12,6 +12,9 @@ router.post("/login",logIn);
 router.post("/logout",logOut);
 
 router.get("/check",protectRoute,checkAuth);
+
+router.get("/profile",protectRoute,getProfile);
+
 // check route to check the user is logged in or not
 
 export default router; 

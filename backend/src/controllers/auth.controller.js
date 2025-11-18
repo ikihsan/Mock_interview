@@ -10,8 +10,13 @@ export const signUp = async (req, res) => {
             return res.status(400).json({ message: "All fields are required" });
         }
 
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ message: "Invalid email format" });
+        }
+
         if (password.length < 6) {
-            return res.status(400).json({ message: "Password must be atleast 6 characters" });
+            return res.status(400).json({ message: "Password must be at least 6 characters" });
         }
         const user = await User.findOne({ email })
 
@@ -90,6 +95,19 @@ export const checkAuth = (req, res) => {
         res.status(200).json(req.user);
     } catch (error) {
         console.log("Error in the checkAuth:", error.message);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
+export const getProfile = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id).select("-password");
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        console.log("Error in getProfile:", error.message);
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
