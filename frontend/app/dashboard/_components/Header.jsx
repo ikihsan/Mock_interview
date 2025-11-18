@@ -3,12 +3,14 @@ import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
-import { UserCircle2 } from "lucide-react";
+import { UserCircle2, Sun, Moon } from "lucide-react";
+import { useTheme } from "next-themes";
 
 function Header() {
   const path = usePathname();
   const router = useRouter();
   const { authUser,userLogOut } = useAuthStore();
+  const { theme, setTheme } = useTheme();
   const user = authUser;
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -66,7 +68,19 @@ function Header() {
         </ul>
       </nav>
 
-      <div className="relative" ref={dropdownRef}>
+      <div className="flex items-center gap-4">
+        <button
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+        >
+          {theme === "dark" ? (
+            <Sun className="w-5 h-5 text-yellow-500" />
+          ) : (
+            <Moon className="w-5 h-5 text-gray-700" />
+          )}
+        </button>
+
+        <div className="relative" ref={dropdownRef}>
         <button
           onClick={() => setDropdownOpen((prev) => !prev)}
           className="ml-4 p-2 rounded-full hover:bg-gray-200 transition"
