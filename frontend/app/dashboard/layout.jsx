@@ -1,3 +1,4 @@
+"use client"
 import React,{ useEffect } from 'react'
 import Header from './_components/Header'
 import { useAuthStore } from '@/store/useAuthStore'
